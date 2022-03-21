@@ -1,18 +1,28 @@
-import './SingleCard.css';
+import './SingleCard.scss';
+import Card from '../types/Card';
 
-export default function SingleCard({ card, handleChoice, flipped, disabled }) {
-   const handleClick = () => {
-      if (!disabled) {
-         handleChoice(card);
-      }
-   };
+type PropTypes = {
+  card: Card;
+  handleChoice: (card: Card) => void;
+  flipped: boolean;
+  disabled: boolean;
+};
 
-   return (
-      <div className='card'>
-         <div className={flipped ? 'flipped' : ''}>
-            <img className='front' src={card.src} alt='card front' />
-            <img src='/img/cover.png' className='back' onClick={handleClick} alt='card back' />
-         </div>
+export default function SingleCard({ card, handleChoice, flipped, disabled }: PropTypes) {
+  const handleClick = () => {
+    if (!disabled) {
+      handleChoice(card);
+    }
+  };
+
+  return (
+    <div className='card'>
+      <div className={flipped ? 'flipped' : ''}>
+        <div className='front content'>{card.emoji}</div>
+        <div className='back content' onClick={handleClick}>
+          back
+        </div>
       </div>
-   );
+    </div>
+  );
 }
