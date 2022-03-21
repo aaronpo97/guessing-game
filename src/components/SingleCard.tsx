@@ -3,13 +3,13 @@ import Card from '../types/Card';
 
 type PropTypes = {
   card: Card;
-  handleChoice: (card: Card) => void;
-  flipped: boolean;
   disabled: boolean;
+  flipped: boolean;
+  handleChoice: (card: Card) => void;
 };
 
-const SingleCard = ({ card, handleChoice, flipped, disabled }: PropTypes): JSX.Element => {
-  const handleClick = () => {
+const SingleCard = ({ card, disabled, flipped, handleChoice }: PropTypes): JSX.Element => {
+  const handleClick = (): void => {
     if (!disabled) {
       handleChoice(card);
     }

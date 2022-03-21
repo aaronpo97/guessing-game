@@ -2,6 +2,13 @@
   max-width: 860px;
   margin: 40px auto;
 }
+
+.game-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 button {
   background: none;
   border: 2px solid #fff;
@@ -11,15 +18,16 @@ button {
   font-weight: bold;
   cursor: pointer;
   font-size: 1em;
-}
-button:hover {
-  background: #c23866;
-  color: #fff;
+
+  &:hover {
+    background: #c23866;
+    color: #fff;
+  }
 }
 
 .card-grid {
   margin-top: 1em;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 100px 100px 100px 100px;
   grid-gap: 10px;
 }

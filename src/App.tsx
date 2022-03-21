@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import SingleCard from './components/SingleCard';
 import Card from './types/Card';
 
-const emojis: string[] = ['🍍', '🥝', '🍉', '🍎', '🍑', '🍓'];
+const emojis: string[] = ['🍍', '🥝', '🍉', '🍎', '🍑', '🍓', '🍌', '🍇'];
 
 const cardContent: Card[] = emojis.map((emoji): Card => ({ emoji, matched: false }));
 
@@ -57,22 +57,24 @@ const App = (): JSX.Element => {
 
   return (
     <div className='App'>
-      <h1>The Fruit Guesser</h1>
+      <h1>Fruit Memory Match</h1>
       <h2>by Aaron Po</h2>
       <button onClick={shuffleCards}>New Game</button>
-      {cards && (
-        <div className='card-grid'>
-          {cards.map((card) => (
-            <SingleCard
-              card={card}
-              key={card.id}
-              handleChoice={handleChoice}
-              flipped={card === choiceOne || card === choiceTwo || card.matched}
-              disabled={disabled}
-            />
-          ))}
-        </div>
-      )}
+      <div className='game-container'>
+        {cards && (
+          <div className='card-grid'>
+            {cards.map((card) => (
+              <SingleCard
+                card={card}
+                key={card.id}
+                handleChoice={handleChoice}
+                flipped={card === choiceOne || card === choiceTwo || card.matched}
+                disabled={disabled}
+              />
+            ))}
+          </div>
+        )}
+      </div>
       <p>Turns: {turns}</p>
     </div>
   );
