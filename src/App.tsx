@@ -17,11 +17,10 @@ const App = (): JSX.Element => {
   const shuffleCards = (): void => {
     const shuffledCards = [...cardContent, ...cardContent]
       .sort(() => Math.random() - 0.5)
-      .map((card) => ({ ...card, id: Math.floor(Math.random() * 10000000) }));
+      .map((card, index) => ({ ...card, id: index }));
 
     setChoiceOne(null);
     setChoiceTwo(null);
-
     setCards(shuffledCards);
     setTurns(0);
   };
@@ -36,30 +35,30 @@ const App = (): JSX.Element => {
   };
 
   useEffect(() => {
-    if (choiceOne && choiceTwo) {
-      setDisabled(true);
-      if (choiceOne.emoji === choiceTwo.emoji) {
-        setCards((prevCards) => {
-          return (prevCards as Card[]).map((card) => {
-            if (card.emoji === choiceOne.emoji) {
-              return { ...card, matched: true };
-            } else {
-              return card;
-            }
-          });
-        });
-        resetTurn();
-      } else {
-        setTimeout(() => resetTurn(), 1000);
-      }
+    if (!(choiceOne && choiceTwo)) return;
+
+    setDisabled(true);
+
+    if (choiceOne.emoji !== choiceTwo.emoji) {
+      setTimeout(() => resetTurn(), 1000);
+      return;
     }
+
+    setCards((prevCards) =>
+      (prevCards as Card[]).map((card) =>
+        card.emoji === choiceOne.emoji ? { ...card, matched: true } : card,
+      ),
+    );
+
+    resetTurn();
   }, [choiceOne, choiceTwo]);
 
   useEffect(() => shuffleCards(), []);
 
   return (
     <div className='App'>
-      <h1>Magic Match</h1>
+      <h1>The Fruit Guesser</h1>
+      <h2>by Aaron Po</h2>
       <button onClick={shuffleCards}>New Game</button>
       {cards && (
         <div className='card-grid'>

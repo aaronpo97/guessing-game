@@ -8,7 +8,7 @@ type PropTypes = {
   disabled: boolean;
 };
 
-export default function SingleCard({ card, handleChoice, flipped, disabled }: PropTypes) {
+const SingleCard = ({ card, handleChoice, flipped, disabled }: PropTypes): JSX.Element => {
   const handleClick = () => {
     if (!disabled) {
       handleChoice(card);
@@ -19,10 +19,10 @@ export default function SingleCard({ card, handleChoice, flipped, disabled }: Pr
     <div className='card'>
       <div className={flipped ? 'flipped' : ''}>
         <div className='front content'>{card.emoji}</div>
-        <div className='back content' onClick={handleClick}>
-          back
-        </div>
+        <div className='back content' onClick={handleClick} />
       </div>
     </div>
   );
-}
+};
+
+export default SingleCard;

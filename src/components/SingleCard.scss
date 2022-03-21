@@ -3,7 +3,7 @@
 }
 
 .card .content {
-  width: 100%;
+  width: 200px;
   display: block;
   border: 2px solid #fff;
   border-radius: 6px;
@@ -11,8 +11,13 @@
 }
 
 .card .front {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   transform: rotateY(90deg);
   position: absolute;
+  font-size: 40pt;
+  background-color: darken($color: white, $amount: 10);
 }
 
 .flipped .front {
@@ -23,6 +28,7 @@
 .card .back {
   transition: all ease-in 0.2s;
   transition-delay: 0.2s;
+  background-color: darken($color: blue, $amount: 40);
 }
 
 .flipped .back {
