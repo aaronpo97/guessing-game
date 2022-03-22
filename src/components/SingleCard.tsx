@@ -17,7 +17,7 @@ const SingleCard = ({ card, disabled, flipped, handleChoice }: PropTypes): JSX.E
 
   return (
     <div className='card'>
-      <div className={flipped ? 'flipped' : ''}>
+      <div className={flipped ? 'flipped' : 'unflipped'}>
         <div className='front content'>{card.emoji}</div>
         <div className='back content' onClick={handleClick} />
       </div>

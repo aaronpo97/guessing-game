@@ -13,19 +13,23 @@ const App = (): JSX.Element => {
   const [choiceOne, setChoiceOne] = useState<Card | null>(null);
   const [choiceTwo, setChoiceTwo] = useState<Card | null>(null);
   const [disabled, setDisabled] = useState<boolean>(false);
+  const [gameOver, setGameOver] = useState<boolean>(false);
 
   const shuffleCards = (): void => {
     const shuffledCards = [...cardContent, ...cardContent]
       .sort(() => Math.random() - 0.5)
       .map((card, index) => ({ ...card, id: index }));
 
+    setGameOver(false);
     setChoiceOne(null);
     setChoiceTwo(null);
     setCards(shuffledCards);
     setTurns(0);
   };
 
-  const handleChoice = (card: Card) => (choiceOne ? setChoiceTwo(card) : setChoiceOne(card));
+  const handleChoice = (card: Card) => {
+    choiceOne ? setChoiceTwo(card) : setChoiceOne(card);
+  };
 
   const resetTurn = () => {
     setChoiceOne(null);
@@ -34,7 +38,7 @@ const App = (): JSX.Element => {
     setDisabled(false);
   };
 
-  useEffect(() => {
+  const checkChoices = () => {
     if (!(choiceOne && choiceTwo)) {
       return;
     }
@@ -50,10 +54,19 @@ const App = (): JSX.Element => {
     );
 
     resetTurn();
-  }, [choiceOne, choiceTwo]);
+  };
 
+  const checkIfGameOver = () => {
+    if (!cards?.length) return;
+    const unmatchedCards = cards?.filter((card) => card.matched === false);
+    if (!unmatchedCards?.length) {
+      setGameOver(true);
+      localStorage.setItem('score', turns.toString());
+    }
+  };
   useEffect(() => shuffleCards(), []);
-
+  useEffect(() => checkChoices(), [choiceOne, choiceTwo]);
+  useEffect(() => checkIfGameOver(), [cards]);
   return (
     <div className='App'>
       <h1>Fruit Memory Match</h1>
@@ -61,21 +74,25 @@ const App = (): JSX.Element => {
         New Game
       </button>
       <main>
-        <div className='game-container'>
-          {cards && (
-            <div className='card-grid'>
-              {cards.map((card) => (
-                <SingleCard
-                  card={card}
-                  key={card.id}
-                  handleChoice={handleChoice}
-                  flipped={card === choiceOne || card === choiceTwo || card.matched}
-                  disabled={disabled}
-                />
-              ))}
+        {!gameOver && (
+          <>
+            <div className='game-container'>
+              {cards && (
+                <div className='card-grid'>
+                  {cards.map((card) => (
+                    <SingleCard
+                      card={card}
+                      key={card.id}
+                      handleChoice={handleChoice}
+                      flipped={card === choiceOne || card === choiceTwo || card.matched}
+                      disabled={disabled}
+                    />
+                  ))}
+                </div>
+              )}
             </div>
-          )}
-        </div>
+          </>
+        )}
         <div className='game-score'>
           <p>Turns: {turns}</p>
         </div>
