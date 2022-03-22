@@ -35,15 +35,14 @@ const App = (): JSX.Element => {
   };
 
   useEffect(() => {
-    if (!(choiceOne && choiceTwo)) return;
-
+    if (!(choiceOne && choiceTwo)) {
+      return;
+    }
     setDisabled(true);
-
     if (choiceOne.emoji !== choiceTwo.emoji) {
       setTimeout(() => resetTurn(), 1000);
       return;
     }
-
     setCards((prevCards) =>
       (prevCards as Card[]).map((card) =>
         card.emoji === choiceOne.emoji ? { ...card, matched: true } : card,
@@ -58,26 +57,32 @@ const App = (): JSX.Element => {
   return (
     <div className='App'>
       <h1>Fruit Memory Match</h1>
-      <h2>by Aaron Po</h2>
       <button disabled={disabled} onClick={shuffleCards}>
         New Game
       </button>
-      <div className='game-container'>
-        {cards && (
-          <div className='card-grid'>
-            {cards.map((card) => (
-              <SingleCard
-                card={card}
-                key={card.id}
-                handleChoice={handleChoice}
-                flipped={card === choiceOne || card === choiceTwo || card.matched}
-                disabled={disabled}
-              />
-            ))}
-          </div>
-        )}
-      </div>
-      <p>Turns: {turns}</p>
+      <main>
+        <div className='game-container'>
+          {cards && (
+            <div className='card-grid'>
+              {cards.map((card) => (
+                <SingleCard
+                  card={card}
+                  key={card.id}
+                  handleChoice={handleChoice}
+                  flipped={card === choiceOne || card === choiceTwo || card.matched}
+                  disabled={disabled}
+                />
+              ))}
+            </div>
+          )}
+        </div>
+        <div className='game-score'>
+          <p>Turns: {turns}</p>
+        </div>
+      </main>
+      <footer>
+        <p>created by Aaron William Po</p>
+      </footer>
     </div>
   );
 };
