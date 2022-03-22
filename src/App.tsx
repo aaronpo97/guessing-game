@@ -59,7 +59,9 @@ const App = (): JSX.Element => {
     <div className='App'>
       <h1>Fruit Memory Match</h1>
       <h2>by Aaron Po</h2>
-      <button onClick={shuffleCards}>New Game</button>
+      <button disabled={disabled} onClick={shuffleCards}>
+        New Game
+      </button>
       <div className='game-container'>
         {cards && (
           <div className='card-grid'>
