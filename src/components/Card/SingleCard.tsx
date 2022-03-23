@@ -1,11 +1,11 @@
 import './SingleCard.scss';
-import Card from '../types/Card';
+import ICard from '../../types/Card';
 
 type PropTypes = {
-  card: Card;
+  card: ICard;
   disabled: boolean;
   flipped: boolean;
-  handleChoice: (card: Card) => void;
+  handleChoice: (card: ICard) => void;
 };
 
 const SingleCard = ({ card, disabled, flipped, handleChoice }: PropTypes): JSX.Element => {

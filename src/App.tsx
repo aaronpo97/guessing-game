@@ -1,6 +1,6 @@
 import './App.scss';
 import { useState, useEffect } from 'react';
-import SingleCard from './components/SingleCard';
+import SingleCard from './components/Card/SingleCard';
 import Card from './types/Card';
 
 const emojis: string[] = ['🍍', '🥝', '🍉', '🍎', '🍑', '🍓', '🍌', '🍇'];
@@ -13,6 +13,7 @@ const App = (): JSX.Element => {
   const [choiceOne, setChoiceOne] = useState<Card | null>(null);
   const [choiceTwo, setChoiceTwo] = useState<Card | null>(null);
   const [disabled, setDisabled] = useState<boolean>(false);
+  const [gameOver, setGameOver] = useState<boolean>(false);
 
   const shuffleCards = (): void => {
     const shuffledCards = [...cardContent, ...cardContent]
@@ -35,7 +36,7 @@ const App = (): JSX.Element => {
   };
 
   useEffect(() => {
-    if (!(choiceOne && choiceTwo)) {
+    if (!(choiceOne && choiceTwo) || choiceOne.id === choiceTwo.id) {
       return;
     }
     setDisabled(true);
@@ -54,13 +55,22 @@ const App = (): JSX.Element => {
 
   useEffect(() => shuffleCards(), []);
 
+  useEffect(() => {
+    const unmatchedCards = cards?.filter((card) => card.matched === false);
+    if (!unmatchedCards) {
+      setGameOver(true);
+    }
+  }, [turns]);
   return (
     <div className='App'>
       <h1>Fruit Memory Match</h1>
-      <button disabled={disabled} onClick={shuffleCards}>
-        New Game
-      </button>
       <main>
+        <div className='status'>
+          <button disabled={disabled} onClick={shuffleCards}>
+            {!disabled ? 'New Game' : 'Loading...'}
+          </button>
+        </div>
+
         <div className='game-container'>
           {cards && (
             <div className='card-grid'>
@@ -76,12 +86,17 @@ const App = (): JSX.Element => {
             </div>
           )}
         </div>
-        <div className='game-score'>
-          <p>Turns: {turns}</p>
+
+        <div className='status'>
+          <div className='game-controls'>
+            <div className='game-score'>
+              <h2>Turns: {turns}</h2>
+            </div>
+          </div>
         </div>
       </main>
       <footer>
-        <p>created by Aaron William Po</p>
+        <code>created by Aaron William Po</code>
       </footer>
     </div>
   );

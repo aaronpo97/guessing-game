@@ -18,6 +18,7 @@
     position: absolute;
     font-size: 40pt;
     background-color: darken($color: white, $amount: 10);
+    pointer-events: none;
   }
 
   .back {
