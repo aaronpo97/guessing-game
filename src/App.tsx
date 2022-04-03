@@ -61,14 +61,21 @@ const App = (): JSX.Element => {
       setGameOver(true);
     }
   }, [turns]);
+
   return (
     <div className='App'>
       <h1>Fruit Memory Match</h1>
       <main>
-        <div className='status'>
-          <button disabled={disabled} onClick={shuffleCards}>
-            {!disabled ? 'New Game' : 'Loading...'}
-          </button>
+        <div className='game-header'>
+          {!disabled ? (
+            <button disabled={disabled} onClick={shuffleCards}>
+              New Game
+            </button>
+          ) : (
+            <div className='mismatch'>
+              <p>Mismatch!</p>
+            </div>
+          )}
         </div>
 
         <div className='game-container'>
@@ -87,11 +94,9 @@ const App = (): JSX.Element => {
           )}
         </div>
 
-        <div className='status'>
-          <div className='game-controls'>
-            <div className='game-score'>
-              <h2>Turns: {turns}</h2>
-            </div>
+        <div className='game-controls'>
+          <div className='game-score'>
+            <h2>Turns: {turns}</h2>
           </div>
         </div>
       </main>
