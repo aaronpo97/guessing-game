@@ -101,7 +101,7 @@ const App = (): JSX.Element => {
         </div>
       </main>
       <footer>
-        <code>created by Aaron William Po</code>
+        <code>created by ayerble</code>
       </footer>
     </div>
   );
